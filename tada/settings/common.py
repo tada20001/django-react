@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'bootstrap4',
 
+    'accounts',
+
 ]
 
 MIDDLEWARE = [
@@ -78,6 +80,9 @@ DATABASES = {
 }
 
 
+AUTH_USER_MODEL = "accounts.User"
+
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -124,3 +129,28 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 INTERNAL_IPS = ['127.0.0.1', ]
+
+ADMINS = [
+    ('Tada', 'tada20001@gmail.com'),
+]
+
+
+#Email with SENDGrid settings
+# SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
+
+# EMAIL_HOST = 'smtp.sendgrid.net'
+# EMAIL_HOST_USER = 'apikey' # this is exactly the value 'apikey'
+# EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = 'user@gmail.com'
+EMAIL_HOST_PASSWORD = 'yimjunghee'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+WELCOME_EMAIL_SENDER = "tada20001@gmail.com"
