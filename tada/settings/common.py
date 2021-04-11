@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'bootstrap4',
     'django_pydenticon',
+    'easy_thumbnails',
 
     'accounts',
     'instagram',
@@ -156,3 +157,10 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 WELCOME_EMAIL_SENDER = "tada20001@gmail.com"
+
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (50, 50), 'crop': True},
+    },
+}
