@@ -19,6 +19,9 @@ class User(AbstractUser):
                                 upload_to="accounts/profile/%Y/%m/%d",
                                 help_text = "48px * 48px 크기의 png/jpg 파일을 업로드해 주세요.")
 
+    follower_set = models.ManyToManyField('self', blank=True)
+    following_set = models.ManyToManyField('self', blank=True)
+
     
     @property
     def name(self):
