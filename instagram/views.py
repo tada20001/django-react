@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from datetime import timedelta
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Q
@@ -8,11 +10,14 @@ from .forms import PostForm
 
 @login_required
 def index(request):
+    timesince = timezone.now() - timedelta(days=3)
     post_list = Post.objects.all()\
         .filter(
             Q(author=request.user) |
             Q(author__in=request.user.following_set.all())
-        )
+        )\
+        .filter(
+            created_at__lte=timesince) # 3일이하 경과된 포스팅만 가져오겠다.
 
     suggested_user_list = get_user_model().objects.all().exclude(pk=request.user.pk)\
                             .exclude(pk__in=request.user.following_set.all())[:3]
