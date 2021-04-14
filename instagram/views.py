@@ -64,7 +64,12 @@ def comment_new(request, post_pk):
             comment.post = get_object_or_404(Post, pk=post_pk)
             comment.author = request.user
             comment.save()
-            messages.success(request, "댓글이 저장되었습니다.")
+            #messages.success(request, "댓글이 저장되었습니다.")
+
+            if request.is_ajax():
+                return render(request, "instagram/_comment.html", {
+                    "comment": comment,
+                })
             return redirect(comment.post)
     else:
         form = CommentForm()
