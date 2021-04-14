@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q
 from django.contrib import messages
 from .models import Tag, Post
-from .forms import PostForm
+from .forms import PostForm, CommentForm
 
 @login_required
 def index(request):
@@ -48,6 +48,21 @@ def post_new(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, "instagram/post_detail.html", {'post': post, })
+
+@login_required
+def comment_new(request, post_pk):
+    if request.method == "POST":
+        form = CommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = get_object_or_404(Post, pk=post_pk)
+            comment.author = request.user
+            comment.save()
+            messages.success(request, "댓글이 저장되었습니다.")
+            return redirect(comment.post)
+    else:
+        form = CommentForm()
+    return render(request, "instagram/comment_form.html", {'form': form,})
 
 
 @login_required
